@@ -1,0 +1,17 @@
+* text=auto
+
+*.cs text diff=csharp
+
+*.css text diff=css
+*.scss text diff=css
+
+*.sh text eol=lf
+
+*.cmd text eol=crlf
+*.bat text eol=crlf
+
+*.jpg binary
+*.png binary
+*.gif binary
+*.pdf binary
+*.nupkg binary
