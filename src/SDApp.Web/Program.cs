@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore;
 using Serilog;
 using Serilog.Formatting.Compact;
 
@@ -17,12 +18,38 @@ builder.Services.AddSerilog((services, config) =>
     }
 });
 
+builder.Services.AddMvc();
+
+builder.Services.AddGovUkFrontend();
+
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddSassCompiler();
+}
+
 var app = builder.Build();
 
 app.UseSerilogRequestLogging();
 
-app.MapGet("/health", () => "OK");
+if (app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/error");
+}
 
-app.MapGet("/", () => "Hello World!");
+app.UseStatusCodePagesWithReExecute("/error", "?code={0}");
+
+app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.UseGovUkFrontend();
+
+app.MapStaticAssets();
+
+app.MapControllers()
+    .WithStaticAssets();
+
+app.MapGet("/health", () => "OK");
 
 app.Run();
