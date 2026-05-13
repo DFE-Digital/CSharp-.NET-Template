@@ -21,6 +21,8 @@ var app = builder.Build();
 
 app.UseSerilogRequestLogging();
 
+app.MapGet("/health", () => "OK");
+
 app.MapGet("/", () => "Hello World!");
 
 app.Run();
