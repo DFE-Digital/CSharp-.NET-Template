@@ -9,7 +9,7 @@ builder.Services.AddSerilog((services, config) =>
 
     if (builder.Environment.IsDevelopment())
     {
-        config.WriteTo.Console();
+        config.WriteTo.Console(formatProvider: System.Globalization.CultureInfo.CurrentCulture);
     }
     else
     {
