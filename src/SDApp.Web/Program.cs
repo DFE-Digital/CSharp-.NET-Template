@@ -3,6 +3,8 @@ using Serilog.Formatting.Compact;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.WebHost.UseSentry();
+
 builder.Services.AddSerilog((services, config) =>
 {
     config.ReadFrom.Configuration(builder.Configuration);
@@ -15,6 +17,13 @@ builder.Services.AddSerilog((services, config) =>
     {
         config.WriteTo.Console(new CompactJsonFormatter());
     }
+    
+    config.WriteTo.Sentry(options =>
+    {
+        options.InitializeSdk = false;  // SDK is initialized by builder.WebHost.UseSentry();
+        options.MinimumBreadcrumbLevel = Serilog.Events.LogEventLevel.Debug;
+        options.MinimumEventLevel = Serilog.Events.LogEventLevel.Error;
+    });
 });
 
 var app = builder.Build();
