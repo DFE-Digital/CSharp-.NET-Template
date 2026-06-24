@@ -1,4 +1,8 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="Dockerfile" />
+    <File Path="dotnet-tools.json" />
+  </Folder>
   <Folder Name="/src/">
     <Project Path="src/SDApp.Web/SDApp.Web.csproj" />
   </Folder>
