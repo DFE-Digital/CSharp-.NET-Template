@@ -1,4 +1,5 @@
 using GovUk.Frontend.AspNetCore;
+using SDApp.Web;
 using Serilog;
 using Serilog.Formatting.Compact;
 
@@ -18,6 +19,18 @@ builder.Services.AddSerilog((services, config) =>
     }
 });
 
+var postgresConnectionString = builder.Configuration.GetConnectionString(AppDbContext.ConnectionName) ??
+    throw new InvalidOperationException($"Connection string '{AppDbContext.ConnectionName}' not found.");
+
+builder.Services
+    .AddDbContext<AppDbContext>(
+        options => AppDbContext.Configure(options, postgresConnectionString),
+        contextLifetime: ServiceLifetime.Scoped,
+        optionsLifetime: ServiceLifetime.Singleton)
+    .AddDbContextFactory<AppDbContext>(
+        options => AppDbContext.Configure(options, postgresConnectionString),
+        lifetime: ServiceLifetime.Singleton);
+
 builder.Services.AddMvc();
 
 builder.Services.AddGovUkFrontend();
@@ -33,7 +46,12 @@ app.UseSerilogRequestLogging();
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/error");
+    app.UseDeveloperExceptionPage();
+    app.UseMigrationsEndPoint();
+}
+else
+{
+	app.UseExceptionHandler("/error");
 }
 
 app.UseStatusCodePagesWithReExecute("/error", "?code={0}");
