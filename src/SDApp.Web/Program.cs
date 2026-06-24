@@ -1,3 +1,4 @@
+using GovUk.Frontend.AspNetCore;
 using SDApp.Web;
 using Serilog;
 using Serilog.Formatting.Compact;
@@ -30,6 +31,15 @@ builder.Services
         options => AppDbContext.Configure(options, postgresConnectionString),
         lifetime: ServiceLifetime.Singleton);
 
+builder.Services.AddMvc();
+
+builder.Services.AddGovUkFrontend();
+
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddSassCompiler();
+}
+
 var app = builder.Build();
 
 app.UseSerilogRequestLogging();
@@ -39,9 +49,25 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
     app.UseMigrationsEndPoint();
 }
+else
+{
+	app.UseExceptionHandler("/error");
+}
+
+app.UseStatusCodePagesWithReExecute("/error", "?code={0}");
+
+app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.UseGovUkFrontend();
+
+app.MapStaticAssets();
+
+app.MapControllers()
+    .WithStaticAssets();
 
 app.MapGet("/health", () => "OK");
-
-app.MapGet("/", () => "Hello World!");
 
 app.Run();
