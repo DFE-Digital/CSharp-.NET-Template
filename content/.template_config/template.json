@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "DfE Schools Digital",
+  "tags": {
+    "language": "C#"
+  },
+  "identity": "GovUK.Dfe.SchoolsDigitalApp",
+  "name": "DfE Schools Digital app",
+  "shortName": "sd-app",
+  "sourceName": "SDApp",
+  "preferNameDirectory": true,
+  "sources": [
+    {
+      "exclude": [
+        ".template_config/**"
+      ]
+    }
+  ]
+}
