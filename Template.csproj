@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <PackageId>GovUK.Dfe.SchoolsDigitalApp</PackageId>
-    <PackageVersion>1.0</PackageVersion>
     <Title>DfE Schools Digital app</Title>
     <Authors>DfE Schools Digital</Authors>
     <PackageProjectUrl>https://github.com/DFE-Digital/CSharp-.NET-Template/</PackageProjectUrl>
@@ -15,6 +14,12 @@
     <NoWarn>$(NoWarn);NU5128</NoWarn>
     <NoDefaultExcludes>true</NoDefaultExcludes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageProjectUrl>https://github.com/DFE-Digital/CSharp-.NET-Template</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/DFE-Digital/CSharp-.NET-Template</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <MinVerTagPrefix>v</MinVerTagPrefix>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -23,6 +28,10 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.TemplateEngine.Tasks" Version="*" PrivateAssets="all" IsImplicitlyDefined="true"/>
+    <PackageReference Include="MinVer" Version="7.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
