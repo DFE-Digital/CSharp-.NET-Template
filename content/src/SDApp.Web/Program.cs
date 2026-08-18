@@ -42,6 +42,9 @@ builder.Services
 
 builder.Services.AddMvc();
 
+builder.Services.AddHealthChecks()
+    .AddNpgSql(postgresConnectionString);
+
 builder.Services.AddGovUkFrontend();
 
 if (builder.Environment.IsDevelopment())
@@ -78,5 +81,7 @@ app.MapControllers()
     .WithStaticAssets();
 
 app.MapGet("/health", () => "OK");
+
+app.UseHealthChecks("/status");
 
 app.Run();
