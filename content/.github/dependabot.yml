@@ -1,0 +1,32 @@
+version: 2
+updates:
+
+  - package-ecosystem: nuget
+    directory: /
+    schedule:
+      interval: "daily"
+    cooldown:
+      default-days: 3
+    groups:
+      dotnet:
+        patterns:
+          - "Microsoft.AspNetCore.*"
+          - "Microsoft.EntityFrameworkCore.*"
+          - "Microsoft.Extensions.*"
+          - "System.Net.Http.Json"
+      Serilog:
+        patterns:
+          - "Serilog.*"
+      Sentry:
+        patterns:
+          - "Sentry.*"
+      xunit:
+        patterns:
+          - "xunit.*"
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: "daily"
+    cooldown:
+      default-days: 3
