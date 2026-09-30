@@ -49,6 +49,12 @@ if (builder.Environment.IsDevelopment())
     builder.Services.AddSassCompiler();
 }
 
+builder.Services.AddDistributedPostgresCache(options =>
+{
+    options.ConnectionString = postgresConnectionString;
+    options.CreateIfNotExists = true;
+});
+
 var app = builder.Build();
 
 app.UseSerilogRequestLogging();
