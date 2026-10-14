@@ -1,5 +1,6 @@
 using GovUk.Frontend.AspNetCore;
 using Microsoft.AspNetCore.DataProtection;
+using Prometheus;
 using SDApp.Web;
 using Serilog;
 using Serilog.Formatting.Compact;
@@ -72,6 +73,8 @@ app.UseStatusCodePagesWithReExecute("/error", "?code={0}");
 
 app.UseRouting();
 
+app.UseHttpMetrics();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -83,5 +86,7 @@ app.MapControllers()
     .WithStaticAssets();
 
 app.MapGet("/health", () => "OK");
+
+app.MapMetrics("/metrics");
 
 app.Run();
