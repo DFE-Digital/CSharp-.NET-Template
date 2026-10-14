@@ -7,7 +7,7 @@ RUN dotnet restore
 RUN dotnet publish --no-restore --configuration Release
 RUN dotnet ef migrations bundle -p src/SDApp.Web/ --configuration Release --output efbundle
 
-FROM mcr.microsoft.com/dotnet/aspnet:10.0.8-noble-chiseled-extra-amd64@sha256:d3552fc1bd9b5195f6a397a547975fa1dbfb21870b4710f929eaa9adc5ceee42
+FROM mcr.microsoft.com/dotnet/aspnet:10.0.12-noble-chiseled-extra-amd64@sha256:69c87e30c013eac2024da453545dfc13f1476347726da4e1a534d66789a7564f
 ARG GIT_SHA
 WORKDIR /app
 
