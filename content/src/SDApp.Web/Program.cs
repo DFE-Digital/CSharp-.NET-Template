@@ -1,4 +1,5 @@
 using GovUk.Frontend.AspNetCore;
+using Microsoft.AspNetCore.DataProtection;
 using SDApp.Web;
 using Serilog;
 using Serilog.Formatting.Compact;
@@ -39,8 +40,12 @@ builder.Services
     .AddDbContextFactory<AppDbContext>(
         options => AppDbContext.Configure(options, postgresConnectionString),
         lifetime: ServiceLifetime.Singleton);
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddMvc();
+
+builder.Services.AddDataProtection()
+    .PersistKeysToDbContext<AppDbContext>();
 
 builder.Services.AddGovUkFrontend();
 

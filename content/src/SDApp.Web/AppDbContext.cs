@@ -1,10 +1,13 @@
+using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace SDApp.Web;
 
-public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
+public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options), IDataProtectionKeyContext
 {
     public const string ConnectionName = "AppDb";
+    
+    public DbSet<DataProtectionKey> DataProtectionKeys => Set<DataProtectionKey>();
     
     public static void Configure(DbContextOptionsBuilder builder, string connectionString) =>
         builder
