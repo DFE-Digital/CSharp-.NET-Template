@@ -65,22 +65,16 @@ builder.Services.AddDistributedPostgresCache(options =>
     options.CreateIfNotExists = true;
 });
 
-if (!builder.Environment.IsDevelopment())
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
-    builder.Services.Configure<ForwardedHeadersOptions>(options =>
-    {
-        options.ForwardedHeaders = ForwardedHeaders.All;
-        options.KnownIPNetworks.Clear();
-        options.KnownProxies.Clear();
-    });
-}
+    options.ForwardedHeaders = ForwardedHeaders.All;
+    options.KnownIPNetworks.Clear();
+    options.KnownProxies.Clear();
+});
 
 var app = builder.Build();
 
-if (!app.Environment.IsDevelopment())
-{
-    app.UseForwardedHeaders();
-}
+app.UseForwardedHeaders();
 
 app.UseSerilogRequestLogging();
 
