@@ -3,7 +3,9 @@
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <TreatWarningsAsErrors Condition="'$(Configuration)' == 'Release'">true</TreatWarningsAsErrors>
+    <!-- MSBuildRestoreSessionId is only set during restore; without it NuGet's NU* warnings are never escalated,
+         since CI and the Dockerfile restore before switching to the Release configuration. -->
+    <TreatWarningsAsErrors Condition="'$(Configuration)' == 'Release' or '$(MSBuildRestoreSessionId)' != ''">true</TreatWarningsAsErrors>
     <AnalysisMode>Recommended</AnalysisMode>
   </PropertyGroup>
 </Project>
