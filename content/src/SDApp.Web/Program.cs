@@ -1,7 +1,10 @@
 using GovUk.Frontend.AspNetCore;
+using Joonasw.AspNetCore.SecurityHeaders;
+using Joonasw.AspNetCore.SecurityHeaders.Csp;
 using Microsoft.AspNetCore.DataProtection;
 using Prometheus;
 using SDApp.Web;
+using SDApp.Web.Middleware;
 using Serilog;
 using Serilog.Formatting.Compact;
 
@@ -51,7 +54,12 @@ builder.Services.AddDataProtection()
 builder.Services.AddHealthChecks()
     .AddNpgSql(postgresConnectionString);
 
-builder.Services.AddGovUkFrontend();
+builder.Services.AddGovUkFrontend(options =>
+{
+    options.GetCspNonceForRequest = context => context.RequestServices.GetRequiredService<ICspNonceService>().GetNonce();
+});
+
+builder.Services.AddCsp(nonceByteAmount: 32);
 
 if (builder.Environment.IsDevelopment())
 {
@@ -79,6 +87,42 @@ else
 }
 
 app.UseStatusCodePagesWithReExecute("/error", "?code={0}");
+
+app.UseCsp(csp =>
+{
+    csp.ByDefaultAllow
+        .FromSelf();
+
+    csp.AllowScripts
+        .FromSelf()
+        .AddNonce();
+
+    csp.AllowStyles
+        .FromSelf()
+        .AddNonce();
+
+    csp.AllowPlugins
+        .FromNowhere();
+
+    csp.AllowBaseUri
+        .FromSelf();
+
+    csp.AllowFormActions
+        .ToSelf();
+
+    csp.AllowFraming
+        .FromNowhere();
+
+    // Ensure ASP.NET Core's browser refresh works
+    // See https://github.com/dotnet/aspnetcore/issues/33068
+    if (builder.Environment.IsDevelopment())
+    {
+        csp.AllowConnections
+            .ToAnywhere();
+    }
+});
+
+app.UseMiddleware<AppendSecurityResponseHeadersMiddleware>();
 
 app.UseRouting();
 
