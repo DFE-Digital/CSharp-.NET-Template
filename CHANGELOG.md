@@ -6,6 +6,8 @@ Update the aspnet runtime base image to 10.0.12 to fix openssl vulnerabilities S
 
 Treat NuGet restore warnings as errors
 
+Add a Content Security Policy header and other security response headers
+
 ## 0.1.0
 
 Initial release
