@@ -6,6 +6,8 @@ Update the aspnet runtime base image to 10.0.12 to fix openssl vulnerabilities S
 
 Treat NuGet restore warnings as errors
 
+Add Hangfire for background jobs, with the dashboard enabled in Development only
+
 ## 0.1.0
 
 Initial release

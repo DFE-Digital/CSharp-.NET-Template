@@ -1,4 +1,6 @@
 using GovUk.Frontend.AspNetCore;
+using Hangfire;
+using Hangfire.PostgreSql;
 using Microsoft.AspNetCore.DataProtection;
 using Prometheus;
 using SDApp.Web;
@@ -64,6 +66,14 @@ builder.Services.AddDistributedPostgresCache(options =>
     options.CreateIfNotExists = true;
 });
 
+builder.Services.AddHangfire(config => config
+    .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+    .UseSimpleAssemblyNameTypeSerializer()
+    .UseRecommendedSerializerSettings()
+    .UsePostgreSqlStorage(options => options.UseNpgsqlConnection(postgresConnectionString)));
+
+builder.Services.AddHangfireServer();
+
 var app = builder.Build();
 
 app.UseSerilogRequestLogging();
@@ -97,6 +107,18 @@ app.MapControllers()
 app.MapGet("/health", () => "OK");
 
 app.MapMetrics("/metrics");
+
+// The Hangfire dashboard is only enabled in Development, where it is restricted to local requests.
+// An authorization policy MUST be specified before enabling the dashboard in any other environment,
+// otherwise anyone could view and manage background jobs. Replace the call below with:
+//
+//     app.MapHangfireDashboardWithAuthorizationPolicy(authorizationPolicyName: "YourPolicyName", "/hangfire");
+//
+// where "YourPolicyName" is a policy registered with builder.Services.AddAuthorization(...).
+if (app.Environment.IsDevelopment())
+{
+    app.MapHangfireDashboard("/hangfire");
+}
 
 app.UseHealthChecks("/status");
 
