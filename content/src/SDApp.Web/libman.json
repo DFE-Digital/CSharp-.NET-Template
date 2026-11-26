@@ -1,0 +1,6 @@
+{
+  "$schema": "https://json.schemastore.org/libman.json",
+  "version": "3.0",
+  "defaultProvider": "jsdelivr",
+  "libraries": []
+}

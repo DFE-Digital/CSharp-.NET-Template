@@ -8,6 +8,8 @@ Treat NuGet restore warnings as errors
 
 Replace the obsolete cookie banner action element
 
+Add LibMan for managing client-side libraries
+
 ## 0.1.0
 
 Initial release
