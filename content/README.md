@@ -20,6 +20,16 @@ To list the secrets you have set, run:
 dotnet user-secrets list
 ```
 
+### Exception handling
+
+By default, unhandled exceptions are handled by showing the error page.
+In `Development` this is turned off by `HandleExceptions` in `appsettings.Development.json`, so the developer exception page is shown instead.
+To see the error page locally, override the setting with user secrets:
+
+```shell
+dotnet user-secrets set "HandleExceptions" "true"
+```
+
 ## Database migrations
 
 Ensure you have the Entity Framework Core tools installed. You can install them using the following command from the root directory:

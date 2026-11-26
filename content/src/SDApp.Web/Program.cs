@@ -68,14 +68,18 @@ var app = builder.Build();
 
 app.UseSerilogRequestLogging();
 
-if (app.Environment.IsDevelopment())
+if (app.Configuration.GetValue("HandleExceptions", defaultValue: true))
 {
-    app.UseDeveloperExceptionPage();
-    app.UseMigrationsEndPoint();
+    app.UseExceptionHandler("/error");
 }
 else
 {
-	app.UseExceptionHandler("/error");
+    app.UseDeveloperExceptionPage();
+}
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseMigrationsEndPoint();
 }
 
 app.UseStatusCodePagesWithReExecute("/error", "?code={0}");

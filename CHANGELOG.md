@@ -10,6 +10,8 @@ Replace the obsolete cookie banner action element
 
 Add a user secrets ID to the generated project and document using user secrets for local development configuration
 
+Add a `HandleExceptions` setting to control whether the error page or the developer exception page is shown; it is `false` in `Development` by default
+
 ## 0.1.0
 
 Initial release
