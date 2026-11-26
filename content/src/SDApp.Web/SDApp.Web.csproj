@@ -21,6 +21,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Caching.Postgres" Version="1.2.2" />
+    <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="3.0.114" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.3" />
     <PackageReference Include="prometheus-net.AspNetCore" Version="8.2.1" />
     <PackageReference Include="Sentry.AspNetCore" Version="6.3.2" />
@@ -29,8 +30,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="sasscompiler.json" />
-    <None Include="sasscompiler.json" />
+    <Content Remove="libman.json;sasscompiler.json" />
+    <None Include="libman.json;sasscompiler.json" />
   </ItemGroup>
 
 </Project>
