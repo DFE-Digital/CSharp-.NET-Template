@@ -8,6 +8,8 @@ Treat NuGet restore warnings as errors
 
 Replace the obsolete cookie banner action element
 
+Add a user secrets ID to the generated project and document using user secrets for local development configuration
+
 ## 0.1.0
 
 Initial release

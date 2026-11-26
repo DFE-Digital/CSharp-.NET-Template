@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
+    <UserSecretsId>SDApp-aee2e5ac-291f-4976-be08-95d3ecdddfd9</UserSecretsId>
     <EnableGovUkFrontendSupport>true</EnableGovUkFrontendSupport>
     <RestoreGovUkFrontendStylesheet>false</RestoreGovUkFrontendStylesheet>
     <RestoreGovUkFrontendNpmPackage>true</RestoreGovUkFrontendNpmPackage>

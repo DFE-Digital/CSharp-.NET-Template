@@ -9,6 +9,9 @@
   "shortName": "sd-app",
   "sourceName": "SDApp",
   "preferNameDirectory": true,
+  "guids": [
+    "aee2e5ac-291f-4976-be08-95d3ecdddfd9"
+  ],
   "sources": [
     {
       "exclude": [
